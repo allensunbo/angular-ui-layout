@@ -1,0 +1,25 @@
+<div ui-layout="{flow : 'column'}">
+    <div ui-layout-container class=" html-back" size="20%"></div>
+
+    <div ui-layout-container class=" js-back" size="60%">
+        <div class="container">
+            <div class="floatleft">
+                <ul ui-sortable="sortableOptions" ng-model="list" class="list">
+                    <li ng-repeat="item in list" class="item">
+                        {{item.text}}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="floatleft" style="margin-left: 20px;">
+                <ul class="list logList">
+                    <li ng-repeat="entry in sortingLog track by $index" class="logItem">
+                        {{entry}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div ui-layout-container class=" css-back"></div>
+</div>

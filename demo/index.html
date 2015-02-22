@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="x">
+<html>
 
 <head>
     <meta charset="utf-8" />
@@ -14,50 +14,46 @@
     <link rel="stylesheet" href="demo.css">
 </head>
 
-<body>
+<body ng-app="x">
+    <div>
+        <div ui-layout>
+            <a ui-sref="state1">State 1</a>
 
-    <div ui-layout>
-        <div ui-layout-container class=" html-back"></div>
+            <div ui-layout-container class=" html-back" size="20%">
 
-        <div ui-layout-container>
-            <div ui-layout="{flow : 'column'}">
-                <div ui-layout-container class=" html-back"></div>
-                <div ui-layout-container class=" js-back">
-                    <div ng-controller="sortableController" class="container">
-                        <div class="floatleft">
-                            <ul ui-sortable="sortableOptions" ng-model="list" class="list">
-                                <li ng-repeat="item in list" class="item">
-                                    {{item.text}}
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div class="floatleft" style="margin-left: 20px;">
-                            <ul class="list logList">
-                                <li ng-repeat="entry in sortingLog track by $index" class="logItem">
-                                    {{entry}}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div ui-layout-container class=" css-back"></div>
             </div>
+
+            <div ui-layout-container><ui-view/></div>
+
+            <div ui-layout-container class=" css-back" size="20%"></div>
         </div>
 
-        <div ui-layout-container class=" css-back"></div>
     </div>
 
     <!-- Le javascript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-    <script type="application/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.10/angular.min.js"></script>
-    <script type="application/javascript" src="https://rawgithub.com/angular-ui/ui-layout/v1.0.5/ui-layout.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+    <script type="text/javascript" src="https://rawgithub.com/angular-ui/ui-layout/v1.0.5/ui-layout.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="https://rawgithub.com/angular-ui/ui-sortable/master/src/sortable.js"></script>
-    <script>
-    var myapp = angular.module('x', ['ui.layout', 'ui.sortable']);
+    <script src="../bower_components/ui-router/release/angular-ui-router.min.js"></script>
 
-    myapp.controller('sortableController', function($scope) {
+    <script>
+    var myapp = angular.module('x', ['ui.router', 'ui.layout', 'ui.sortable']);
+
+    myapp.config(function($stateProvider, $urlRouterProvider) {
+        $urlRouterProvider.otherwise("/state1");
+
+        $stateProvider.
+        state('state1', {
+            url: '/state1',
+            templateUrl: 'center.html',
+            controller: 'SortableController'
+        });
+        //$locationProvider.html5Mode(true);
+    });
+
+    myapp.controller('SortableController', function($scope) {
         var tmpList = [];
 
         for (var i = 1; i <= 6; i++) {
