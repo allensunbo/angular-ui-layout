@@ -17,15 +17,16 @@
 <body ng-app="x">
     <div>
         <div ui-layout>
-            <a ui-sref="state1">State 1</a>
-
-            <div ui-layout-container class=" html-back" size="20%">
-
+            <div ui-layout-container size="20%" style="background: #ee5">
+                <h2 class="pull-left"><a ui-sref="state1">State 1</a></h2>
+                <h2 class="pull-left"><a ui-sref="state2">State 2</a></h2>
             </div>
 
-            <div ui-layout-container><ui-view/></div>
+            <div ui-layout-container>
+                <div ui-view></div>
+            </div>
 
-            <div ui-layout-container class=" css-back" size="20%"></div>
+            <div ui-layout-container class=" css-back" size="20%" style="background: #ee5"></div>
         </div>
 
     </div>
@@ -44,12 +45,17 @@
     myapp.config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/state1");
 
-        $stateProvider.
-        state('state1', {
-            url: '/state1',
-            templateUrl: 'center.html',
-            controller: 'SortableController'
-        });
+        $stateProvider
+            .state('state1', {
+                url: '/state1',
+                templateUrl: 'center.html',
+                controller: 'SortableController'
+            })
+            .state('state2', {
+                url: '/state2',
+                template: '<div ui-layout="{flow : \'column\'}">    <div ui-layout-container class=" html-back"></div></div>'
+            });
+        // No need to add this   
         //$locationProvider.html5Mode(true);
     });
 
