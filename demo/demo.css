@@ -1,0 +1,63 @@
+/* Styles go here */
+
+.html-back {
+    background: #eee url("http://placehold.it/400x300/eee/666&text=HTML") no-repeat center;
+}
+.css-back {
+    background: #eee url("http://placehold.it/400x300/eee/666&text=CSS") no-repeat center;
+}
+.js-back {
+    background: #eee no-repeat center;
+}
+.glyphicon-chevron-left, .glyphicon-chevron-right, .glyphicon-chevron-up, .glyphicon-chevron-down {
+    color: #aaa;
+}
+.list {
+    list-style: none outside none;
+    margin: 10px 0 30px;
+}
+.item {
+    width: 200px;
+    padding: 5px 10px;
+    margin: 5px 0;
+    border: 2px solid #444;
+    border-radius: 5px;
+    background-color: #EA8A8A;
+    font-size: 1.1em;
+    font-weight: bold;
+    text-align: center;
+    cursor: move;
+}
+/***  Extra ***/
+
+body {
+    font-family: Verdana, 'Trebuchet ms', Tahoma;
+}
+.logList {
+    margin-top: 20px;
+    width: 250px;
+    min-height: 200px;
+    padding: 5px 15px;
+    border: 5px solid #000;
+    border-radius: 15px;
+}
+.logList:before {
+    content: 'log';
+    padding: 0 5px;
+    position: relative;
+    top: -1.1em;
+    background-color: #FFF;
+}
+.container {
+    width: 600px;
+    margin: auto;
+}
+h2 {
+    text-align: center;
+}
+.floatleft {
+    float: left;
+}
+.clear {
+    clear: both;
+}
