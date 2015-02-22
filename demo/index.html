@@ -5,24 +5,30 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width">
 
-    <title>UI.Layout : holy grail demo</title>
+    <title>layout</title>
 
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
-
     <link rel="stylesheet" href="../bower_components/angular-ui-layout/ui-layout.css">
     <link rel="stylesheet" href="demo.css">
+
 </head>
 
 <body ng-app="app">
     <div>
         <div ui-layout>
             <div ui-layout-container size="20%" style="background: #ee5">
-                <h2 class="pull-left"><a ui-sref="state1">State 1</a></h2>
-                <h2 class="pull-left"><a ui-sref="state2">State 2</a></h2>
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a ui-sref="state1" class="btn btn-primary navbar-btn">State 1</a>
+                    </li>
+                    <li>
+                        <a ui-sref="state2" class="btn btn-primary navbar-btn">State 2</a>
+                    </li>
+                </ul>
             </div>
 
-            <div ui-layout-container>
+            <div ui-layout-container id="center-view">
                 <div ui-view></div>
             </div>
 
@@ -34,13 +40,14 @@
     <!-- Le javascript -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="../bower_components/angular-ui-layout/ui-layout.min.js"></script>
     <script src="../bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script src="../bower_components/angular-ui-sortable/sortable.js"></script>
     <script src="../bower_components/ui-router/release/angular-ui-router.min.js"></script>
 
     <script>
-    var myapp = angular.module('app', ['ui.router', 'ui.layout', 'ui.sortable']);
+    var myapp = angular.module('app', ['ui.router', 'ui.layout', 'ui.sortable', 'ngSanitize']);
 
     myapp.config(function($stateProvider, $urlRouterProvider) {
         $urlRouterProvider.otherwise("/state1");
@@ -48,7 +55,8 @@
         $stateProvider
             .state('state1', {
                 url: '/state1',
-                templateUrl: 'center.html',
+                // templateUrl: 'center.html',
+                template: '{{center}}',
                 controller: 'SortableController'
             })
             .state('state2', {
@@ -60,7 +68,7 @@
         //$locationProvider.html5Mode(true);
     });
 
-    myapp.controller('SortableController', function($scope) {
+    myapp.controller('SortableController', function($scope, $http, $sce, $interpolate, $compile, $timeout) {
         var tmpList = [];
 
         for (var i = 1; i <= 6; i++) {
@@ -71,7 +79,6 @@
         }
 
         $scope.list = tmpList;
-
 
         $scope.sortingLog = [];
 
@@ -90,6 +97,16 @@
                 $scope.sortingLog.push('Stop: ' + logEntry);
             }
         };
+
+        $http.get('center.html')
+            .success(function(data) {
+                var parent = angular.element(document.querySelector('#center-view'))[0];
+                console.log(parent);
+                var elem = document.createElement('div');
+                elem.innerHTML = data;
+                parent.appendChild(elem);
+                $compile(elem)($scope);
+            });
     });
     </script>
 </body>
