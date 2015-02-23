@@ -55,8 +55,8 @@
         $stateProvider
             .state('state1', {
                 url: '/state1',
-                // templateUrl: 'center.html',
-                template: '{{center}}',
+                templateUrl: 'center.html',
+                ///template: '{{center}}',
                 controller: 'SortableController'
             })
             .state('state2', {
@@ -101,11 +101,17 @@
         $http.get('center.html')
             .success(function(data) {
                 var parent = angular.element(document.querySelector('#center-view'))[0];
-                console.log(parent);
                 var elem = document.createElement('div');
                 elem.innerHTML = data;
-                parent.appendChild(elem);
                 $compile(elem)($scope);
+                // parent.remove(parent.children[0]);
+                // parent.appendChild(elem);
+                $timeout(function() {
+                    $scope.$apply(function() {
+                        $scope.center = $sce.trustAsHtml(elem.innerHTML)
+                    });
+                });
+
             });
     });
     </script>
